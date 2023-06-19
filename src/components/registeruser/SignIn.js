@@ -1,19 +1,21 @@
 import React, { useState, useRef} from 'react';
 import { BrowserRouter,Link,useNavigate, Route, Routes } from "react-router-dom";
-import "./login_style.css";
+import "./signin_style.css";
 import "bootstrap/dist/css/bootstrap.css";
 import { Button, Modal,Nav, Form } from 'react-bootstrap';
 
 
 
-function Login() {
+function SignIn() {
 
   
   const [showModal, setShowModal] = useState(false);
   const navigate=useNavigate();
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
 
-  const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [confpass, setConfPassword] = useState('');
   const [isEmailValid, setIsEmailValid] = useState(true);
 
   // Validation
@@ -28,22 +30,25 @@ function Login() {
   let formStatus = formRef.current.checkValidity();
   
   const emailRegex = /^[a-z A-Z]+[a-z A-Z 0-9 $-._]+@[a-zA-Z ._]+\.(com|in|org)$/;;
-    const isEmailValid = emailRegex.test(username);
+    const isEmailValid = emailRegex.test(email);
+
+    const passmatch=password===confpass;
 
     setIsEmailValid(isEmailValid);
 
-    if (!isEmailValid & !formStatus) {
-      return;
+    if ( !isEmailValid || !passmatch || !formStatus) {
+      return;   
     }
 
     const formData = {
-      username: username,
+      name: name,
+      email: email,
       password: password
     };
   
 
     // Backend fetch
-    fetch('http://localhost:3001/api/userlogin', {
+    fetch('http://localhost:3001/api/register', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -57,15 +62,11 @@ function Login() {
         // Check Success Login
         if (data.success) {
           // Redirect to the user dashboard on successful login
-          localStorage.setItem('loginStatus', 'true');
-          localStorage.setItem('userRole', 'user');
-          navigate('/userdashboard');
+          navigate('/registersuccess');
         } else {
           // Handle login failure
           // console.error('Login failed:', data.message);
-          navigate('/login_fail');
-          formRef.current.classList.remove('was-validated');
-
+          navigate('/registerfail');
         }
       })
       .catch(error => {
@@ -92,7 +93,7 @@ function Login() {
     <div className="split left">
       <div className="centered">
         <div className="login-content-logo-section">
-          <img src="eci_logo.png" alt="logo" /><br/><br/>
+          <img src="eci_logo.png" alt="logo" /><br/>
           <div className="login-content-title" style={{color:'white'}}>
             <h4 className="login-content-htitle">ईसीआई वेब पोर्टल</h4>
             <h4 className="login-content-etitle">ECI Web Portal</h4>
@@ -115,19 +116,36 @@ function Login() {
 
     <div className="split right">
       <div className="centered">
-        <div className="container" id='container'>
-          <h1 style={{textAlign:'center'}} className='m-2'>Login</h1>
+        <div className="container " id='container' style={{marginTop:'20px'}}>
+            
+          <h1 style={{textAlign:'center'}} className='m-2'>SignUp</h1>
           <Form className="needs-validation" ref={formRef} noValidate>
+          <Form.Group controlId="exampleInputText1">
+                    <Form.Label className='m-2'>Name <span style={{color: 'red', fontSize: 'large'}}>*</span></Form.Label>
+                    <Form.Control
+                      className='m-2'
+                      type="text"
+                      id="name"
+                      placeholder="Enter your Full Name"
+                      value={name}
+                      onChange={(e) => setName(e.target.value)}
+                      required
+                    />
+
+                    
+                  </Form.Group>
+          
+          
           <Form.Group controlId="exampleInputEmail1">
-                    <Form.Label className='m-2'>UserID <span style={{color: 'red', fontSize: 'large'}}>*</span></Form.Label>
+                    <Form.Label className='m-2'>Email ID <span style={{color: 'red', fontSize: 'large'}}>*</span></Form.Label>
                     <Form.Control
                       className='m-2'
                       type="text"
                       id="username"
                       placeholder="Enter your Email ID"
-                      pattern="/^[a-zA-Z\s]{3,20}$/"
-                      value={username}
-                      onChange={(e) => setUsername(e.target.value)}
+                      
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
                       required
                     />
 
@@ -142,6 +160,19 @@ function Login() {
                       placeholder="Password"
                       value={password}
                       onChange={(e) => setPassword(e.target.value)}
+                      required
+                    />
+                  </Form.Group>
+
+                  <Form.Group controlId="exampleInputPassword1">
+                    <Form.Label className='m-2'>Confirm Password <span style={{color: 'red', fontSize: 'large'}}>*</span></Form.Label>
+                    <Form.Control
+                      className='m-2'
+                      type="password"
+                      id="confpassword"
+                      placeholder="Password"
+                      value={confpass}
+                      onChange={(e) => setConfPassword(e.target.value)}
                       required
                     />
                   </Form.Group>
@@ -165,4 +196,4 @@ function Login() {
   );
 }
 
-export default Login;
+export default SignIn;
