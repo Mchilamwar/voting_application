@@ -140,6 +140,12 @@ export function Adminnav(){
     
   };
 
+
+  const scrollToBottom = () => {
+    const element = document.documentElement;
+    element.scrollIntoView({ behavior: 'smooth', block: 'end' });
+  };
+
   return(
   
   <>
@@ -157,7 +163,7 @@ export function Adminnav(){
       <Nav className="ms-auto">
        <Nav.Link href="/" style={{color:'#0d6efd'}} >Home</Nav.Link>
         <Nav.Link href="/about">AboutUs</Nav.Link>
-        <Nav.Link href="/">Contact</Nav.Link>
+        <Nav.Link href="#" onClick={scrollToBottom}>Contact</Nav.Link>
        
         <button
           className="btn btn-danger mx-2"

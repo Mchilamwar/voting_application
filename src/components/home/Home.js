@@ -22,6 +22,9 @@ export function Home() {
   );
 }
 
+
+
+
 export function Navigation() {
 
   const [showModal, setShowModal] = useState(false);
@@ -30,6 +33,11 @@ export function Navigation() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [isEmailValid, setIsEmailValid] = useState(true);
+  
+  const scrollToBottom = () => {
+    const element = document.documentElement;
+    element.scrollIntoView({ behavior: 'smooth', block: 'end' });
+  };
 
   const handleCloseModal = () => {
     setShowModal(false);
@@ -97,6 +105,7 @@ export function Navigation() {
 
   };
 
+  
 
  return (
     <Navbar bg="light " expand="lg" style={{fontSize:'large',fontWeight:'bold' }}>
@@ -112,7 +121,7 @@ export function Navigation() {
           <Nav className="ms-auto">
            <Nav.Link href="/" style={{color:'#0d6efd'}} >Home</Nav.Link>
             <Nav.Link href="/about">AboutUs</Nav.Link>
-            <Nav.Link href="/">Contact</Nav.Link>
+            <Nav.Link href="#" onClick={scrollToBottom}>Contact</Nav.Link>
            
             <button
               className="btn btn-danger mx-2"
@@ -269,7 +278,7 @@ export class MyCarousel extends React.Component {
             alt="Slide 1"
           />
           <Carousel.Caption style={{textAlign:'center'}}> {/* Added "text-center" class */}
-            <h2>Welcome to the Online Voting Platform</h2>
+           <center> <h2>Welcome to the Online Voting Platform</h2></center>
           </Carousel.Caption>
         </Carousel.Item>
         <Carousel.Item>
@@ -318,11 +327,11 @@ const navigateToRegister = () => {
               <ul className="list list-icons list-primary list-borders">
                 <li>
                   <i className="fa fa-arrow-circle-right"></i>&nbsp;&nbsp;
-                  <a href="#" target="_blank" rel="noopener noreferrer">👉 Register to vote</a>
+                  <a href="/login" target="_blank" rel="noopener noreferrer">👉 Register to vote</a>
                 </li>
                 <li>
                   <i className="fa fa-arrow-circle-right"></i>&nbsp;&nbsp;
-                  <a href="#" target="_blank" rel="noopener noreferrer">👉 Login to vote</a>
+                  <a href="/login" target="_blank" rel="noopener noreferrer">👉 Login to vote</a>
                 </li>
                 <li>
                   <i className="fa fa-arrow-circle-right"></i>&nbsp;&nbsp;

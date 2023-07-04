@@ -38,7 +38,7 @@ export const VoterResources = () => {
         <div className="col">
           <div className="card card-cover h-100 overflow-hidden text-bg-dark rounded-4 shadow-lg" style={{ backgroundImage: "url('v4.png')",backgroundSize: "cover",
               backgroundPosition: "center" }}>
-            <div className="d-flex flex-column h-150 p-5 pb-3 text-white text-shadow-1"> <Nav.Link as={Link} to={"/"} >
+            <div className="d-flex flex-column h-150 p-5 pb-3 text-white text-shadow-1"> <Nav.Link as={Link} to={"/appshowstatus"} >
               <h2 className="pt-5 mt-5 mb-4 display-6 lh-1 fw-bold" style={{ color: 'rgb(215, 41, 41)' }}>Check Your Application Status</h2></Nav.Link>
               <ul className="d-flex list-unstyled mt-auto">
                 <li className="me-auto"></li>
@@ -53,7 +53,7 @@ export const VoterResources = () => {
         <div className="col">
           <div className="card card-cover h-100 overflow-hidden text-bg-dark rounded-4 shadow-lg" style={{ backgroundImage: "url('1641405686_election.jpg')",backgroundSize: "cover",
               backgroundPosition: "center" }}>
-            <div className="d-flex flex-column h-100 p-5 pb-3 text-shadow-1"> <Nav.Link as={Link} to={"/"} >
+            <div className="d-flex flex-column h-100 p-5 pb-3 text-shadow-1"> <Nav.Link as={Link} to={"/vote"} >
               <h2 className="pt-5 mt-5 mb-4 display-6 lh-1 fw-bold" style={{ color: 'rgb(236, 36, 36)' }}>Vote</h2></Nav.Link>
               <ul className="d-flex list-unstyled mt-auto">
                 <li className="me-auto"></li>
@@ -84,6 +84,13 @@ export const VoterResources = () => {
       
     };
 
+    // -------
+    const scrollToBottom = () => {
+      const element = document.documentElement;
+      element.scrollIntoView({ behavior: 'smooth', block: 'end' });
+    };
+    // -------
+
     return(
     
     <>
@@ -99,9 +106,9 @@ export const VoterResources = () => {
       <Navbar.Toggle aria-controls="basic-navbar-nav" />
       <Navbar.Collapse id="basic-navbar-nav">
         <Nav className="ms-auto">
-         <Nav.Link href="/" style={{color:'#0d6efd'}} >Home</Nav.Link>
+         <Nav.Link href="/userdashboard" style={{color:'#0d6efd'}} >Home</Nav.Link>
           <Nav.Link href="/about">AboutUs</Nav.Link>
-          <Nav.Link href="/">Contact</Nav.Link>
+          <Nav.Link href="#" onClick={scrollToBottom}>Contact</Nav.Link>
          
           <button
             className="btn btn-danger mx-2"

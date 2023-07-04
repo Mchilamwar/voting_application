@@ -98,6 +98,77 @@ app.post('/api/register',async (req,res)=> {
 
 
 
+// regvote
+
+app.post('/api/registervote',async (req,res)=> {
+
+  const { name, age,  gender,  dob,city,state,pincode,  mobile,  email } = req.body;
+  
+    try {
+      await client.connect();
+  
+      const db = client.db('Vote');
+      const messageColl = db.collection('voter');
+      const uniqueId=generateUniqueId(name,city,dob);
+  
+       await messageColl.insertOne({ uid:uniqueId, name:name, age:age,  gender:gender,  dob:dob,city:city,state:state,pincode:pincode,  mobile:mobile,  email:email,status:false  });
+  
+    
+      // Registration successful
+      return res.json({ success: true, message: 'Registration successful'});
+    } catch (error) {
+      console.error('Error:', error);
+      return res.status(500).json({ success: false, message: 'Internal server error' });
+    } finally {
+      await client.close();
+    }
+  });
+
+  function generateUniqueId(name, city, dob) {
+    const randomNumber = Math.floor(Math.random() * 100); // Generate a random number between 0 and 99
+    const formattedDob = dob.replace(/-/g, ''); // Remove dashes from the date of birth
+  
+    const uniqueId = name.slice(0, 3) + city.slice(0, 3) + formattedDob.slice(0, 2) + randomNumber.toString().padStart(2, '0');
+    return uniqueId;
+  }
+  
+
+  app.post('/appstatus', async (req, res) => {
+    try {
+      const { uid } = req.body;
+  
+      // Connect to the MongoDB server
+      const client = await MongoClient.connect(url);
+  
+      // Select the database
+      const db = client.db('Vote');
+  
+      // Select the collection
+      const collection = db.collection('voter');
+  
+      // Retrieve the voter data based on UID
+      const voterData = await collection.findOne({ uid });
+  
+      // Close the connection
+      client.close();
+  
+      if (voterData) {
+        res.status(200).json(voterData);
+      } else {
+        res.status(404).json({ error: 'Voter data not found' });
+      }
+    } catch (error) {
+      console.error('Error:', error);
+      res.status(500).json({ error: 'Internal server error' });
+    }
+  });
+ 
+
+  
+
+
+
+
 
 // Start the server
 app.listen(3001, () => {

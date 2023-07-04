@@ -1,0 +1,431 @@
+ /* body {
+    
+   margin: 0;
+   padding: 0;
+    
+    background-size: cover;
+   background-repeat: no-repeat;
+
+    background-color: rgb(34, 180, 148); 
+    
+  
+ }   */
+
+
+
+
+.voting-container {
+
+ padding: 20px;
+ max-width: 100%;
+ max-height: 100%;
+ 
+ margin-top: 0px;
+margin-bottom: 0px;
+ text-align: center;
+ box-shadow: 0 2px 4px rgba(98, 147, 150, 0.2);
+ text-shadow: #3bb10c;
+ background-color: #25928d
+ 
+}
+
+
+
+h1 {
+ color:rgb(237, 15, 200);
+ font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+ ;
+ 
+}
+
+h2 {
+ color: goldenrod;
+ margin-top: 20px;
+}
+
+ul {
+ list-style: none;
+ padding: 0;
+}
+
+li {
+ margin-bottom: 10px;
+}
+
+label {
+ display: block;
+}
+
+button {
+ background-color: #4caf50;
+ color: white;
+ border: none;
+ padding: 10px 20px;
+ margin-top: 20px;
+ cursor: pointer;
+}
+
+button:disabled {
+ background-color: #ccc;
+ cursor: not-allowed;
+}
+
+/* VotingPage.css */
+.voting-container {
+ /* Your existing styles for the voting container */
+
+ /* display: flex;
+ flex-wrap: wrap; */
+ justify-content: center;
+ margin-top: 160px;
+}
+
+.card-container {
+ /* Your existing styles for the card container */
+
+ display: flex;
+ justify-content: space-between;
+ flex-wrap: wrap;
+ margin-top: 50px;
+}
+
+.candidate-card {
+ /* Your existing styles for the candidate card */
+
+ width: 300px;
+ height: 300px;
+ margin: 10px;
+ padding: 20px;
+ border: 1px solid #ccc;
+ border-radius: 10px;
+ display: flex;
+ flex-direction: row;
+ justify-content: center;
+ align-items: center;
+ 
+}
+
+.card-body {
+ /* Your existing styles for the card body */
+
+ text-align: center;
+}
+
+
+.card-image {
+  width: 200px;
+  height: 200px;
+  
+  object-fit: cover;
+  border-radius: 50%;
+  margin-bottom: 20px;
+}
+
+.image-container {
+  width: 200px;
+  height: 200px;
+  overflow: hidden;
+  position: relative;
+}
+
+.image-container img {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+}
+
+.square-image-container {
+  width: 200px;
+  height: 200px;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: none;
+}
+
+.square-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: none;
+}
+
+
+
+
+.voting-container {
+ background-color: #a2cec8;
+ padding: 20px;
+ max-width: 100%;
+ max-height: 100%;
+ 
+ margin-top: 0px;
+ text-align: center;
+ box-shadow: 0 2px 4px rgba(98, 147, 150, 0.2);
+ text-shadow: #3bb10c;
+ background-color: #25928d
+ 
+}
+
+
+
+h1 {
+ color:rgb(237, 15, 200);
+ font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+ ;
+ 
+}
+
+h2 {
+ color: goldenrod;
+ margin-top: 20px;
+}
+
+ul {
+ list-style: none;
+ padding: 0;
+}
+
+li {
+ margin-bottom: 10px;
+}
+
+label {
+ display: block;
+}
+
+button {
+ background-color: #4caf50;
+ color: white;
+ border: none;
+ padding: 10px 20px;
+ margin-top: 20px;
+ cursor: pointer;
+}
+
+button:disabled {
+ background-color: #ccc;
+ cursor: not-allowed;
+}
+
+/* VotingPage.css */
+.voting-container {
+ /* Your existing styles for the voting container */
+
+ /* display: flex;
+ flex-wrap: wrap; */
+ justify-content: center;
+ margin-top: 160px;
+}
+
+.card-container {
+ /* Your existing styles for the card container */
+
+ display: flex;
+ justify-content: space-between;
+ flex-wrap: wrap;
+ margin-top: 50px;
+}
+
+.candidate-card {
+ /* Your existing styles for the candidate card */
+
+ width: 300px;
+ height: 300px;
+ margin: 10px;
+ padding: 20px;
+ border: 1px solid #ccc;
+ border-radius: 10px;
+ display: flex;
+ flex-direction: row;
+ justify-content: center;
+ align-items: center;
+ 
+}
+
+.card-body {
+ /* Your existing styles for the card body */
+
+ text-align: center;
+}
+
+
+.card-image {
+  width: 200px;
+  height: 200px;
+  
+  object-fit: cover;
+  border-radius: 50%;
+  margin-bottom: 20px;
+}
+
+.image-container {
+  width: 200px;
+  height: 200px;
+  overflow: hidden;
+  position: relative;
+}
+
+.image-container img {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+}
+
+.square-image-container {
+  width: 200px;
+  height: 200px;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: none;
+}
+
+.square-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: none;
+}
+
+
+  
+
+.voting-container {
+   background-color: #a2cec8;
+   padding: 20px;
+   max-width: 100%;
+   max-height: 100%;
+   
+   margin-top: 0px;
+   text-align: center;
+   box-shadow: 0 2px 4px rgba(98, 147, 150, 0.2);
+   text-shadow: #3bb10c;
+   background-color: #25928d
+   
+ }
+
+ 
+ 
+ h1 {
+   color:rgb(237, 15, 200);
+   font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+   ;
+   
+ }
+ 
+ h2 {
+   color: goldenrod;
+   margin-top: 20px;
+ }
+ 
+ ul {
+   list-style: none;
+   padding: 0;
+ }
+ 
+ li {
+   margin-bottom: 10px;
+ }
+ 
+ label {
+   display: block;
+ }
+ 
+ button {
+   background-color: #4caf50;
+   color: white;
+   border: none;
+   padding: 10px 20px;
+   margin-top: 20px;
+   cursor: pointer;
+ }
+ 
+ button:disabled {
+   background-color: #ccc;
+   cursor: not-allowed;
+ }
+ 
+ /* VotingPage.css */
+.voting-container {
+   /* Your existing styles for the voting container */
+ 
+   /* display: flex;
+   flex-wrap: wrap; */
+   justify-content: center;
+   margin-top: 160px;
+ }
+ 
+ .card-container {
+   /* Your existing styles for the card container */
+ 
+   display: flex;
+   justify-content: space-between;
+   flex-wrap: wrap;
+   margin-top: 50px;
+ }
+ 
+ .candidate-card {
+   /* Your existing styles for the candidate card */
+ 
+   width: 300px;
+   height: 300px;
+   margin: 10px;
+   padding: 20px;
+   border: 1px solid #ccc;
+   border-radius: 10px;
+   display: flex;
+   flex-direction: row;
+   justify-content: center;
+   align-items: center;
+   
+ }
+ 
+ .card-body {
+   /* Your existing styles for the card body */
+ 
+   text-align: center;
+ }
+ 
+
+ .card-image {
+    width: 200px;
+    height: 200px;
+    
+    object-fit: cover;
+    border-radius: 50%;
+    margin-bottom: 20px;
+  }
+
+  .image-container {
+    width: 200px;
+    height: 200px;
+    overflow: hidden;
+    position: relative;
+  }
+  
+  .image-container img {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+  }
+
+  .square-image-container {
+    width: 200px;
+    height: 200px;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: none;
+  }
+  
+  .square-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: none;
+  }
+  

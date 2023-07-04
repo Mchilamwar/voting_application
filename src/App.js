@@ -9,8 +9,9 @@ import SignIn from "./components/registeruser/SignIn";
 import { RegisterSuccess } from './components/registeruser/Register_Success';
 import { RegisterFail } from './components/registeruser/Register_Fail';
 import {About} from './components/about/About';
+import { Appshowstatus } from './components/applicationstatus/Appstatus';
+import { VotingPage } from './components/vote/VotingPage.jsx';
 import { RegisterVoter } from './components/regvoter/RegisterVoter';
-
 
 function App() {
   return (
@@ -35,7 +36,13 @@ function App() {
 
           <Route path='/userdashboard' element={<ProtectedRoute allowedRoles={['user']}><UserDashboard/></ProtectedRoute>} />
 
+
           <Route path='/regvoter' element={<ProtectedRoute allowedRoles={['user']}><RegisterVoter/></ProtectedRoute>} />
+
+
+          <Route path='/appshowstatus' element={<ProtectedRoute allowedRoles={['user']}><Appshowstatus/></ProtectedRoute>} />
+
+          <Route path='/vote' element={<ProtectedRoute allowedRoles={['user']}><VotingPage/></ProtectedRoute>} />
 
 
           <Route path='/about' element={<About/>} />

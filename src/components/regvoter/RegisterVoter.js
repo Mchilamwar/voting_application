@@ -1,210 +1,256 @@
-import React, { useState } from 'react';
-import './regvoter.css';
+import React, { useRef, useState } from 'react';
+import { Form, Button, Row, Col, Alert, Container } from 'react-bootstrap';
+import 'bootstrap/dist/css/bootstrap.min.css';
 import { Usernav } from '../userdash/Userdashboard';
 import { Footer } from '../home/Home';
+import { useNavigate } from 'react-router-dom';
+
 
 export const RegisterVoter = () => {
-  const [name, setName] = useState('');
-  const [age, setAge] = useState('');
-  const [gender, setGender] = useState('');
-  const [dob, setDob] = useState('');
-  const [city, setCity] = useState('');
-  const [state, setState] = useState('');
-  const [pincode, setPincode] = useState('');
-  const [mobile, setMobile] = useState('');
-  const [email, setEmail] = useState('');
+
+  const navigate=useNavigate();
+  const formref=useRef();
+  const [formData, setFormData] = useState({
+    name: '',
+    age: '',
+    gender: '',
+    dob: '',
+    city: '',
+    state: '',
+    pincode: '',
+    mobile: '',
+    email: '',
+  });
   const [errors, setErrors] = useState({});
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
-    // Perform validation
     const validationErrors = {};
-    if (!name) {
-      validationErrors.name = 'Please enter your name';
-    }
-    if (!age) {
-      validationErrors.age = 'Please enter your age';
-    } else if (isNaN(age)) {
-      validationErrors.age = 'Age must be a number';
-    } else if (parseInt(age) < 18) {
-      validationErrors.age = 'You must be at least 18 years old';
-    }
-    if (!gender) {
-      validationErrors.gender = 'Please select your gender';
-    }
-    if (!dob) {
-      validationErrors.dob = 'Please enter your date of birth';
-    }
-    if (!city) {
-      validationErrors.city = 'Please enter your city';
-    }
-    if (!state) {
-      validationErrors.state = 'Please enter your state';
-    }
-    if (!pincode) {
-      validationErrors.pincode = 'Please enter your pincode';
-    } else if (isNaN(pincode)) {
-      validationErrors.pincode = 'Pincode must be a number';
-    }
-    if (!mobile) {
-      validationErrors.mobile = 'Please enter your mobile number';
-    } else if (isNaN(mobile)) {
-      validationErrors.mobile = 'Mobile number must be a number';
-    }
-    if (!email) {
-      validationErrors.email = 'Please enter your email ID';
-    } else if (!isValidEmail(email)) {
-      validationErrors.email = 'Please enter a valid email ID';
-    }
 
-    // If there are validation errors, update the state and stop form submission
-    if (Object.keys(validationErrors).length > 0) {
-      setErrors(validationErrors);
-      return;
+    // Perform validation checks
+    if (!formData.name) {
+      validationErrors.name = 'Name is required.';
     }
+    // Add more validation checks for other fields
 
-    // If the form is valid, submit the data
-    console.log('Name:', name);
-    console.log('Age:', age);
-    console.log('Gender:', gender);
-    console.log('Date of Birth:', dob);
-    console.log('City:', city);
-    console.log('State:', state);
-    console.log('Pincode:', pincode);
-    console.log('Mobile:', mobile);
-    console.log('Email:', email);
+    // Update the errors state
+    setErrors(validationErrors);
 
-    // Reset the form
-    setName('');
-    setAge('');
-    setGender('');
-    setDob('');
-    setCity('');
-    setState('');
-    setPincode('');
-    setMobile('');
-    setEmail('');
-    setErrors({});
-  };
-
-  const isValidEmail = (email) => {
-    // Basic email validation regex
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return emailRegex.test(email);
+    // If there are no validation errors, submit the form
+    if (Object.keys(validationErrors).length === 0) {
+      // Perform form submission logic here
+      fetch('http://localhost:3001/api/registervote', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(formData)
+      })
+        .then(response => response.json())
+        .then(data => {
+          console.log('Response:', data);
+  
+          // Check Success Login
+          if (data.success) {
+            // Redirect to the user dashboard on successful login
+            navigate('/userdashboard');
+          } else {
+            // Handle login failure
+            // console.error('Login failed:', data.message);
+            navigate('/registerfail');
+          }
+        })
+        .catch(error => {
+          console.error('Error:', error);
+        })
+  
+        formref.current.classList.remove('was-validated');
+  
+      
+      console.log('Form submitted:', formData);
+    }
   };
 
   return (
     <>
     <Usernav/>
-        <h2 style={{fontSize:'large',}}>Apply To Vote </h2>    
-      <form onSubmit={handleSubmit}>
-      <div>
-        <label htmlFor="name">Name:</label>
-        <input
-          type="text"
-          id="name"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-        />
-        {errors.name && <span>{errors.name}</span>}
-      </div>
+    <Container className=''>
+    <Form onSubmit={handleSubmit} ref={formref}>
+      <Form.Group as={Row} controlId="name">
+        <Form.Label column sm={2}>
+          Name:
+        </Form.Label>
+        <Col sm={10}>
+          <Form.Control className='my-2 '
+            type="text"
+            value={formData.name}
+            onChange={(e) =>
+              setFormData({ ...formData, name: e.target.value })
+            }
+            isInvalid={!!errors.name}
+          />
+          <Form.Control.Feedback type="invalid">
+            {errors.name}
+          </Form.Control.Feedback>
+        </Col>
+      </Form.Group>
 
-      <div>
-        <label htmlFor="age">Age:</label>
-        <input
-          type="text"
-          id="age"
-          value={age}
-          onChange={(e) => setAge(e.target.value)}
-        />
-        {errors.age && <span>{errors.age}</span>}
-      </div>
+      <Form.Group as={Row} controlId="age">
+        <Form.Label column sm={2}>
+          Age:
+        </Form.Label>
+        <Col sm={10}>
+          <Form.Control className='my-2 '
+            type="text"
+            value={formData.age}
+            onChange={(e) => setFormData({ ...formData, age: e.target.value })}
+            isInvalid={!!errors.age}
+          />
+          <Form.Control.Feedback type="invalid">
+            {errors.age}
+          </Form.Control.Feedback>
+        </Col>
+      </Form.Group>
 
-      <div>
-        <label htmlFor="gender">Gender:</label>
-        <select
-          id="gender"
-          value={gender}
-          onChange={(e) => setGender(e.target.value)}
-        >
-          <option value="">Select</option>
-          <option value="male">Male</option>
-          <option value="female">Female</option>
-          <option value="other">Other</option>
-        </select>
-        {errors.gender && <span>{errors.gender}</span>}
-      </div>
+      <Form.Group as={Row} controlId="gender">
+        <Form.Label column sm={2}>
+          Gender:
+        </Form.Label>
+        <Col sm={10}>
+          <Form.Control
+            as="select" className='my-2 '
+            value={formData.gender}
+            onChange={(e) =>
+              setFormData({ ...formData, gender: e.target.value })
+            }
+            isInvalid={!!errors.gender}
+          >
+            <option value="">Select</option>
+            <option value="male">Male</option>
+            <option value="female">Female</option>
+            <option value="other">Other</option>
+          </Form.Control>
+          <Form.Control.Feedback type="invalid">
+            {errors.gender}
+          </Form.Control.Feedback>
+        </Col>
+      </Form.Group>
 
-      <div>
-        <label htmlFor="dob">Date of Birth:</label>
-        <input
-          type="text"
-          id="dob"
-          value={dob}
-          onChange={(e) => setDob(e.target.value)}
-        />
-        {errors.dob && <span>{errors.dob}</span>}
-      </div>
+      <Form.Group as={Row} controlId="dob">
+        <Form.Label column sm={2}>
+          Date of Birth:
+        </Form.Label>
+        <Col sm={10}>
+          <Form.Control className='my-2 '
+            type="date"
+            value={formData.dob}
+            onChange={(e) => setFormData({ ...formData, dob: e.target.value })}
+            isInvalid={!!errors.dob}
+          />
+          <Form.Control.Feedback type="invalid">
+            {errors.dob}
+          </Form.Control.Feedback>
+        </Col>
+      </Form.Group>
 
-      <div>
-        <label htmlFor="city">City:</label>
-        <input
-          type="text"
-          id="city"
-          value={city}
-          onChange={(e) => setCity(e.target.value)}
-        />
-        {errors.city && <span>{errors.city}</span>}
-      </div>
+      <Form.Group as={Row} controlId="city">
+        <Form.Label column sm={2}>
+          City:
+        </Form.Label>
+        <Col sm={10}>
+          <Form.Control className='my-2 '
+            type="text"
+            value={formData.city}
+            onChange={(e) => setFormData({ ...formData, city: e.target.value })}
+            isInvalid={!!errors.city}
+          />
+          <Form.Control.Feedback type="invalid">
+            {errors.city}
+          </Form.Control.Feedback>
+        </Col>
+      </Form.Group>
 
-      <div>
-        <label htmlFor="state">State:</label>
-        <input
-          type="text"
-          id="state"
-          value={state}
-          onChange={(e) => setState(e.target.value)}
-        />
-        {errors.state && <span>{errors.state}</span>}
-      </div>
+      <Form.Group as={Row} controlId="state">
+        <Form.Label column sm={2}>
+          State:
+        </Form.Label>
+        <Col sm={10}>
+          <Form.Control className='my-2 '
+            type="text"
+            value={formData.state}
+            onChange={(e) =>
+              setFormData({ ...formData, state: e.target.value })
+            }
+            isInvalid={!!errors.state}
+          />
+          <Form.Control.Feedback type="invalid">
+            {errors.state}
+          </Form.Control.Feedback>
+        </Col>
+      </Form.Group>
 
-      <div>
-        <label htmlFor="pincode">Pincode:</label>
-        <input
-          type="text"
-          id="pincode"
-          value={pincode}
-          onChange={(e) => setPincode(e.target.value)}
-        />
-        {errors.pincode && <span>{errors.pincode}</span>}
-      </div>
+      <Form.Group as={Row} className='my-2 ' controlId="pincode">
+        <Form.Label column sm={2}>
+          Pincode:
+        </Form.Label>
+        <Col sm={10}>
+          <Form.Control
+            type="text"
+            value={formData.pincode}
+            onChange={(e) =>
+              setFormData({ ...formData, pincode: e.target.value })
+            }
+            isInvalid={!!errors.pincode}
+          />
+          <Form.Control.Feedback type="invalid">
+            {errors.pincode}
+          </Form.Control.Feedback>
+        </Col>
+      </Form.Group>
 
-      <div>
-        <label htmlFor="mobile">Mobile Number:</label>
-        <input
-          type="text"
-          id="mobile"
-          value={mobile}
-          onChange={(e) => setMobile(e.target.value)}
-        />
-        {errors.mobile && <span>{errors.mobile}</span>}
-      </div>
+      <Form.Group as={Row} controlId="mobile">
+        <Form.Label column sm={2}>
+          Mobile Number:
+        </Form.Label>
+        <Col sm={10}>
+          <Form.Control
+            type="text" className='my-2 '
+            value={formData.mobile}
+            onChange={(e) =>
+              setFormData({ ...formData, mobile: e.target.value })
+            }
+            isInvalid={!!errors.mobile}
+          />
+          <Form.Control.Feedback type="invalid"> 
+            {errors.mobile}
+          </Form.Control.Feedback>
+        </Col>
+      </Form.Group>
 
-      <div>
-        <label htmlFor="email">Email ID:</label>
-        <input
-          type="text"
-          id="email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-        />
-        {errors.email && <span>{errors.email}</span>}
-      </div>
+      <Form.Group as={Row} controlId="email">
+        <Form.Label column sm={2}>
+          Email ID:
+        </Form.Label>
+        <Col sm={10}>
+          <Form.Control className='my-2 '
+            type="text"
+            value={formData.email}
+            onChange={(e) =>
+              setFormData({ ...formData, email: e.target.value })
+            }
+            isInvalid={!!errors.email}
+          />
+          <Form.Control.Feedback type="invalid">
+            {errors.email}
+          </Form.Control.Feedback>
+        </Col>
+      </Form.Group>
 
-      <button type="submit">Submit</button>
-    </form>
-  <Footer/>
-  </>
+      <center><Button type="submit" className='my-4 ' style={{width:'200px'}}>Submit</Button></center>
+    </Form>
+    </Container>
+<Footer/>
+</>
   );
 };
+

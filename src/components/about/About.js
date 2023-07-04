@@ -21,7 +21,7 @@ export function About () {
               mindset and meticulous approach to coding make him an indispensable member of the team.
             </p>
           </div>
-          <div className="col-md-5 order-md-1 d-flex align-items-center justify-content-center ">
+          <div className="col-md-5 order-md-1 d-flex align-items-center justify-content-center " id="aboutimg">
             <img src="may.jpg" alt="" style={{height:'300px'}} />
           </div>
         </div>
